@@ -12,20 +12,20 @@
         Sel_Qty = ShPrep.Range("i" & i + 1).Value
 
 
-    If Sel_Area = "" Then GoTo skip:
-    Generate_Tickets 'a sub that generates random ticket_id
-    If Sold_out = True Then Exit Sub ' check if tickets of the area is not sufficient
+        If Sel_Area = "" Then GoTo skip:
+        Generate_Tickets 'a sub that generates random ticket_id
+        If Sold_out = True Then Exit Sub ' check if tickets of the area is not sufficient
+        
+        For k = 0 To Sel_Qty - 1
+            If ShPrep.Range("StartTickRow").Value = 7 Then ShPrep.Range("StartTickRow").Value = ShPrep.Range("StartTickRow").Value - 1
+            Print_Tickets (ShPrep.Range("StartTickRow").Value + k) ' the parameter of the function is the starting row num
+        
+        Next k
     
-    For k = 0 To Sel_Qty - 1
-        If ShPrep.Range("StartTickRow").Value = 7 Then ShPrep.Range("StartTickRow").Value = ShPrep.Range("StartTickRow").Value - 1
-        Print_Tickets (ShPrep.Range("StartTickRow").Value + k) ' the parameter of the function is the starting row num
-    
-    Next k
-    
-    'update the current numbers of seats and rows in the master database
-    Update_MasterDB
-    'load the updated numbers into the ticket inventory section of the print_form
-    Load_Inventory
+        'update the current numbers of seats and rows in the master database
+        Update_MasterDB
+        'load the updated numbers into the ticket inventory section of the print_form
+        Load_Inventory
     skip:
     Next i
     Use_PreviousFP = False
